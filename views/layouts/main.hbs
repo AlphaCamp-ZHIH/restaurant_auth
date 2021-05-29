@@ -27,7 +27,12 @@
             width="30" height="30" class="d-inline-block align-top" alt="我的餐廳清單">
           我的餐廳清單
         </a>
-        <a class="nav-link text-secondary" href="/restaurants/add">create restaurant</a>
+        {{#if user}}
+        <div class="d-flex ">
+        <a class="nav-link text-white bg-info rounded mr-4" href="/restaurants/add">create restaurant</a>
+        <a class="nav-link text-secondary bg-warning rounded" href="/users/logout">logout</a>
+        </div>
+        {{/if}}
     </nav>
 
     <div class="banner mb-3"></div>
