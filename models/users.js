@@ -13,11 +13,11 @@ const user = new Schema({
     type: String,
     required: true,
   },
-  createAt:{
-    type:Date,
-    default:Date.now,
-    required:true
-  }
+  createAt: {
+    type: Date,
+    default: Date.now,
+    required: true,
+  },
 });
 
 module.exports = mongoose.model("User", user);
