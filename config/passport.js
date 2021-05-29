@@ -40,19 +40,24 @@ module.exports = () => {
       },
       (accessToken, refreshToken, profile, done) => {
         const { email, name } = profile._json;
-        const randomPassword = Math.random().toString(36).slice(-8);
-        bcrypt
-          .genSalt(10)
-          .then((salt) => bcrypt.hash(randomPassword, salt))
-          .then((hash) =>
-            User.create({
-              organizer: name,
-              email,
-              password: hash,
-            })
-          )
-          .then((user) => done(null, user))
-          .catch((e) => done(null, false));
+        User.findOne({ email }).then((user) => {
+          if (!user) {
+            const randomPassword = Math.random().toString(36).slice(-8);
+            return bcrypt
+              .genSalt(10)
+              .then((salt) => bcrypt.hash(randomPassword, salt))
+              .then((hash) =>
+                User.create({
+                  organizer: name,
+                  email,
+                  password: hash,
+                })
+              )
+              .then((user) => done(null, user))
+              .catch((e) => done(null, false));
+          }
+          return done(null,user);
+        });
       }
     )
   );
