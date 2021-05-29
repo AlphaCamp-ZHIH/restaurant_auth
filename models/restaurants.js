@@ -42,12 +42,12 @@ const restaurant = new Schema({
     type: String,
     required: true,
   },
-  organizerId:{
+  userId: {
     type: Schema.Types.ObjectId,
-    ref:'User',
-    index:true,
-    required:true
-  }
+    ref: "User",
+    index: true,
+    required: true,
+  },
 });
 
 module.exports = mongoose.model("Restaurant", restaurant);
