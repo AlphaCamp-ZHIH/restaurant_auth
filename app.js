@@ -5,6 +5,10 @@ const methodOverride = require('method-override');
 const bodyParser = require('body-parser');
 const flash= require('connect-flash');
 
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
+
 const passport = require('passport');
 const session = require('express-session');
 const usePassport =require('./config/passport');
