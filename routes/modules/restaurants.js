@@ -4,7 +4,8 @@ const Restaurants = require("../../models/restaurants");
 // search 餐廳
 router.get("/search", (req, res) => {
   const keyword = req.query.keyword;
-  return Restaurants.find()
+  const userId = req.user._id;
+  return Restaurants.find({ userId })
     .lean()
     .then((restaurants) => {
       const filterList = restaurants.filter(
@@ -24,6 +25,7 @@ router.get("/search", (req, res) => {
 // sort by A-Z
 router.get("/sort", (req, res) => {
   const keyword = req.query.type;
+  const userId = req.user._id;
   const sortType = {
     "A-Z": ["name_en", "asc","A-Z"],
     "Z-A": ["name_en", "desc","Z-A"],
@@ -31,7 +33,7 @@ router.get("/sort", (req, res) => {
     location: ["location", "asc","地區"],
   };
   const [type, method,displayName] = sortType[keyword];
-    Restaurants.find()
+    Restaurants.find({ userId })
       .sort({ [type]: method })
       .lean()
       .then((restaurants) =>
