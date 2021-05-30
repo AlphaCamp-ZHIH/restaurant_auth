@@ -35,7 +35,7 @@ router.post("/register", (req, res) => {
     return res.render("register");
   }
   User.findOne({ email }).then((user) => {
-    if (!user) {
+    if (user) {
       // 該用戶已存在
       req.flash("failure_msg", "該用戶已存在");
       return res.render("register", { user: req.body });
