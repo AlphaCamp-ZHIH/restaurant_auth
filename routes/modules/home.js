@@ -8,7 +8,8 @@ const Restaurants = require('../../models/restaurants');
 
 //render index
 router.get("/", (req, res) => {
-  return Restaurants.find()
+  const userId = req.user._id;
+  return Restaurants.find({userId})
     .lean()
     .then(restaurants =>
 

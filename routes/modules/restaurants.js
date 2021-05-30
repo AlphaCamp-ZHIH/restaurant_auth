@@ -49,6 +49,7 @@ router.get("/add", (req, res) => {
   res.render("add");
 });
 router.post("/", (req, res) => {
+  const userId = req.user._id;
   const {
     name,
     name_en,
@@ -75,7 +76,7 @@ router.post("/", (req, res) => {
   ) {
     return res.render("add", { restaurant,errorMessage: "每個欄位皆為必填" });
   }
-  return Restaurants.create(req.body)
+  return Restaurants.create({...req.body,userId})
     .then(() => {
       console.log("create successfully");
       res.redirect("/");
@@ -84,8 +85,9 @@ router.post("/", (req, res) => {
 });
 // 餐廳detail
 router.get("/:id", (req, res) => {
-  const id = req.params.id;
-  return Restaurants.findById(id)
+  const _id = req.params.id;
+  const userId = req.user._id;
+  return Restaurants.findOne({_id,userId})
     .lean()
     .then((restaurant) =>
       res.render("show", {
@@ -109,7 +111,8 @@ router.get("/:id/edit", (req, res) => {
 });
 router.put("/:id", (req, res) => {
   const data = Object.keys(req.body);
-  const id = req.params.id;
+  const _id = req.params.id;
+  const userId = req.user._id;
   const {
     name,
     name_en,
@@ -121,7 +124,7 @@ router.put("/:id", (req, res) => {
     rating,
     description,
   } = req.body;
-  return Restaurants.findById(id)
+  return Restaurants.findOne({_id,userId})
     .then((restaurant) => {
       if (
         !name ||
@@ -146,8 +149,9 @@ router.put("/:id", (req, res) => {
 });
 // 刪除餐廳
 router.delete("/:id", (req, res) => {
-  const id = req.params.id;
-  return Restaurants.findById(id)
+  const _id = req.params.id;
+  const userId = req.user._id;
+  return Restaurants.findOne({_id,userId})
     .then((restaurant) => {
       return restaurant.remove();
     })

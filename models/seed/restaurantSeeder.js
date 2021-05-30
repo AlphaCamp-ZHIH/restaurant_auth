@@ -11,13 +11,13 @@ const data2 = data.slice(4);
 const userData = [
   {
     organizer: "Chen",
-    email: "chen@example.com",
+    email: "user1@example.com",
     password: "12345678",
     data: data1,
   },
   {
     organizer: "Zhih",
-    email: "zhih@example.com",
+    email: "user2@example.com",
     password: "12345678",
     data: data2,
   },

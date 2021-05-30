@@ -24,9 +24,9 @@ router.get("/register", (req, res) => {
 router.post("/register", (req, res) => {
   // console.log(req.body)
   const { organizer, email, password, confirmPassword } = req.body;
-  if (!organizer || !email || !password || !confirmPassword) {
+  if (!email || !password || !confirmPassword) {
     //每個欄位皆必填
-    req.flash("failure_msg", "每個欄位皆必填");
+    req.flash("failure_msg", "請填寫必填欄位");
     return res.render("register");
   }
   if (confirmPassword !== password) {
